@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>排版风格对比 - 每日学习推送</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0f0f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+
+  /* 顶部切换 */
+  .style-switcher {
+    position: sticky; top: 0; z-index: 100;
+    background: #1a1a2e; padding: 16px; text-align: center;
+    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+  }
+  .style-switcher button {
+    padding: 10px 24px; border: 2px solid #667eea; background: transparent;
+    color: #fff; border-radius: 24px; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .style-switcher button.active { background: #667eea; }
+  .style-switcher button:hover { background: #667eea; }
+
+  .style-panel { display: none; }
+  .style-panel.active { display: block; }
+
+  .style-label {
+    text-align: center; padding: 20px; font-size: 18px; font-weight: 700;
+    color: #667eea; background: #f8f9ff; border-bottom: 2px solid #667eea;
+  }
+
+  /* ========== 风格A：杂志风 ========== */
+  .magazine { max-width: 600px; margin: 0 auto; background: #fff; }
+  .magazine .cover {
+    width: 100%; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 22px; font-weight: 700; text-align: center; padding: 20px;
+  }
+  .magazine .meta {
+    padding: 16px 20px 0; font-size: 12px; color: #999;
+    display: flex; justify-content: space-between;
+  }
+  .magazine .article-title {
+    font-size: 22px; font-weight: 800; color: #1a1a2e;
+    padding: 12px 20px 16px; border-bottom: 3px solid #e94560;
+    margin: 0 20px;
+  }
+  .magazine .tags { padding: 12px 20px; }
+  .magazine .tag {
+    display: inline-block; background: #fce4ec; color: #e94560;
+    font-size: 11px; padding: 3px 10px; border-radius: 12px; margin: 2px 4px 2px 0;
+  }
+  .magazine .section { padding: 20px; }
+  .magazine .section + .section { border-top: 1px solid #f0f0f0; }
+  .magazine .section-title {
+    font-size: 17px; font-weight: 700; color: #e94560;
+    margin-bottom: 12px; padding-left: 12px; border-left: 4px solid #e94560;
+  }
+  .magazine .section-body {
+    font-size: 15px; color: #444; line-height: 2; text-align: justify;
+  }
+  .magazine .section-body b { color: #c0392b; }
+  .magazine .case-box {
+    margin: 20px; background: #fafafa; border-left: 4px solid #e94560;
+    padding: 16px 18px; border-radius: 0 8px 8px 0;
+  }
+  .magazine .case-title { font-size: 13px; font-weight: 700; color: #e94560; margin-bottom: 8px; }
+  .magazine .case-body { font-size: 14px; color: #555; line-height: 1.8; }
+  .magazine .quote-box {
+    text-align: center; padding: 24px 20px; margin: 10px 20px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #fff0f5 100%);
+    border-radius: 12px;
+  }
+  .magazine .quote-text {
+    font-size: 16px; font-style: italic; color: #1a1a2e; font-weight: 500; line-height: 1.7;
+  }
+  .magazine .next-hint {
+    padding: 16px 20px; text-align: center; font-size: 13px; color: #999;
+    border-top: 1px dashed #e0e0e0; margin-top: 20px;
+  }
+
+  /* ========== 风格B：简洁笔记风 ========== */
+  .notes { max-width: 600px; margin: 0 auto; background: #fff; padding: 24px 20px; }
+  .notes .header { margin-bottom: 24px; }
+  .notes .book-label { font-size: 12px; color: #667eea; font-weight: 600; letter-spacing: 1px; }
+  .notes .article-title { font-size: 20px; font-weight: 700; color: #1a1a2e; margin-top: 4px; }
+  .notes .progress { font-size: 12px; color: #aaa; margin-top: 8px; }
+  .notes .tags { margin: 12px 0 20px; }
+  .notes .tag {
+    display: inline-block; background: #f0edff; color: #667eea;
+    font-size: 11px; padding: 3px 10px; border-radius: 4px; margin: 2px 4px 2px 0;
+    font-weight: 500;
+  }
+  .notes .section { margin-bottom: 24px; }
+  .notes .section-title {
+    font-size: 15px; font-weight: 700; color: #1a1a2e;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+  }
+  .notes .section-title::before {
+    content: ''; display: inline-block; width: 4px; height: 16px;
+    background: #667eea; border-radius: 2px;
+  }
+  .notes .section-body {
+    font-size: 14px; color: #555; line-height: 1.9;
+    background: #fafafa; padding: 14px 16px; border-radius: 8px;
+  }
+  .notes .section-body b { color: #667eea; background: #f0edff; padding: 1px 4px; border-radius: 3px; }
+  .notes .case-box {
+    background: #fff8e1; border-radius: 8px; padding: 14px 16px; margin: 16px 0;
+  }
+  .notes .case-title { font-size: 12px; font-weight: 700; color: #f57c00; margin-bottom: 6px; }
+  .notes .case-body { font-size: 13px; color: #666; line-height: 1.8; }
+  .notes .quote-box {
+    border-left: 3px solid #667eea; padding: 12px 16px; margin: 16px 0;
+    background: #f8f9ff; border-radius: 0 8px 8px 0;
+  }
+  .notes .quote-text { font-size: 14px; color: #444; font-style: italic; line-height: 1.7; }
+  .notes .next-hint {
+    padding: 12px 16px; background: #f0f0f0; border-radius: 8px;
+    font-size: 13px; color: #888; text-align: center; margin-top: 20px;
+  }
+
+  /* ========== 风格C：卡片风 ========== */
+  .cards { max-width: 600px; margin: 0 auto; background: #f5f7fa; padding: 16px; }
+  .cards .header-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px; padding: 20px; color: #fff; margin-bottom: 16px;
+  }
+  .cards .book-label { font-size: 12px; opacity: 0.8; }
+  .cards .article-title { font-size: 18px; font-weight: 700; margin-top: 4px; }
+  .cards .progress { font-size: 12px; opacity: 0.7; margin-top: 8px; }
+  .cards .tags { margin-top: 10px; }
+  .cards .tag {
+    display: inline-block; background: rgba(255,255,255,0.2);
+    font-size: 11px; padding: 3px 10px; border-radius: 12px; margin: 2px 4px 2px 0;
+  }
+  .cards .knowledge-card {
+    background: #fff; border-radius: 14px; padding: 18px;
+    margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .cards .card-number {
+    display: inline-block; width: 24px; height: 24px; line-height: 24px;
+    text-align: center; background: #667eea; color: #fff;
+    border-radius: 50%; font-size: 12px; font-weight: 700; margin-right: 8px;
+  }
+  .cards .card-title {
+    font-size: 15px; font-weight: 700; color: #1a1a2e;
+    display: inline; vertical-align: middle;
+  }
+  .cards .card-body {
+    font-size: 14px; color: #555; line-height: 1.9; margin-top: 10px;
+  }
+  .cards .card-body b { color: #e94560; }
+  .cards .extra-card {
+    background: #fff; border-radius: 14px; padding: 18px;
+    margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .cards .extra-card.case { border-left: 4px solid #e94560; }
+  .cards .extra-card.quote { border-left: 4px solid #667eea; text-align: center; }
+  .cards .extra-title { font-size: 12px; font-weight: 700; color: #999; margin-bottom: 8px; letter-spacing: 1px; }
+  .cards .case-body { font-size: 14px; color: #555; line-height: 1.8; }
+  .cards .quote-text { font-size: 15px; color: #1a1a2e; font-style: italic; line-height: 1.7; }
+  .cards .next-hint {
+    background: #fff; border-radius: 14px; padding: 14px;
+    text-align: center; font-size: 13px; color: #667eea; font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+</style>
+</head>
+<body>
+
+<!-- 风格切换 -->
+<div class="style-switcher">
+  <button class="active" onclick="showStyle('A')">A 杂志风</button>
+  <button onclick="showStyle('B')">B 简洁笔记风</button>
+  <button onclick="showStyle('C')">C 卡片风</button>
+</div>
+
+<!-- ========== 风格A：杂志风 ========== -->
+<div id="styleA" class="style-panel active">
+  <div class="style-label">风格 A — 杂志风（公众号风格）</div>
+  <div class="magazine">
+    <div class="cover">《影响力》连载学习笔记<br>第 1/16 篇</div>
+    <div class="meta"><span>2025-07-19</span><span>6%</span></div>
+    <h1 class="article-title">固定行为模式：动物与人类共有的自动开关</h1>
+    <div class="tags">
+      <span class="tag">固定行为模式</span><span class="tag">触发特征</span>
+      <span class="tag">捷径</span><span class="tag">认知负荷</span><span class="tag">对比原理</span>
+    </div>
+    <div class="section">
+      <div class="section-title">固定行为模式：动物与人类行为中的"自动开关"</div>
+      <div class="section-body"><b>固定行为模式</b>是行为生态学中的一个核心概念，它指的是生物体在特定刺激下，会以一种固定的、机械的方式执行一系列行为，仿佛被按下了某个"自动开关"。这一模式最早由诺贝尔奖得主康拉德·洛伦兹在灰雁身上发现：当灰雁看到滚出巢穴的蛋时，它会不由自主地用喙将蛋滚回巢中，哪怕蛋被替换成更重的、形状不规则的物体，甚至是一个空罐子，它依然会执行这一动作。这种行为的"固定"之处在于，它一旦启动，就会从头到尾执行完毕，不受外界变化的干扰。在人类身上，固定行为模式同样普遍存在。例如，当我们听到"因为"这个词时，往往会不假思索地同意对方的请求——哈佛大学社会心理学家埃伦·兰格的一项经典实验发现，在复印机前排队时，只要有人说出"因为我要复印几份文件"这一包含"因为"的请求，即使理由毫无新意，插队成功率也高达93%，而直接请求只有60%。这揭示了一个深层机制：人类大脑为了节省认知资源，进化出了依赖特定触发词或情境来自动反应的<b>捷径</b>。这种模式在多数情况下高效且准确，但一旦被别有用心者利用，就会成为我们决策中的致命漏洞。理解固定行为模式，就是认识我们内心那台"自动机器"的运作规则，从而在关键时刻按下暂停键。</div>
+    </div>
+    <div class="section">
+      <div class="section-title">捷径与认知捷径：决策中的"廉价策略"</div>
+      <div class="section-body"><b>捷径</b>，在心理学中特指个体在信息过载或时间压力下，采用简化规则来快速做出判断的策略。而<b>认知捷径</b>则是这些策略的具体形式，如"贵的就是好的"、"专家说的就是对的"等心理公式。诺贝尔经济学奖得主丹尼尔·卡尼曼将这种思维模式称为"系统1"的运作方式——它快速、直觉、无需意志力，却极易受到环境线索的操纵。一个典型的案例来自珠宝店的故事：一位店主将滞销的绿宝石手镯提价两倍，结果反而被抢购一空。顾客们自动地将"高价"与"高品质"关联起来，忽视了手镯本身的价值。这种<b>认知捷径</b>的本质是"以偏概全"：我们用一个简单的线索（价格）替代了复杂的评估（材质、工艺、稀缺性）。在进化史上，这种策略帮助祖先在危险环境中快速决策（如"听到巨大声响=逃跑"），但在现代商业社会中，它被广告商、销售员和政客系统性地利用。例如，奢侈品广告反复强调"稀缺性"和"独特性"，正是为了激活消费者的"稀缺=珍贵"捷径。要打破这种自动反应，我们需要刻意引入"系统2"思维——即慢思考、逻辑分析、质疑假设。但关键在于，我们不可能每时每刻都保持高度警惕，所以真正的智慧在于识别那些最常被利用的认知捷径，并提前设置"心理警戒线"。</div>
+    </div>
+    <div class="case-box">
+      <div class="case-title"> 案例</div>
+      <div class="case-body">一位名叫李明的大学生，在商场看到一款标价2999元的耳机，旁边放着原价4999元的标签。他瞬间觉得"赚大了"，毫不犹豫地买下。回家后才发现，这款耳机在其他电商平台常年售价2500元。他的购买决策完全被"原价与现价的对比"所操控，而高认知负荷（逛街疲惫、手机没电、时间紧迫）让他放弃了理性比较。</div>
+    </div>
+    <div class="quote-box">
+      <div class="quote-text">"当我们以为自己在做选择时，其实很多时候只是在按下一个被预设好的按钮。你确定你的每一次'是'，都是自由意志的体现吗？"</div>
+    </div>
+    <div class="next-hint">下一篇：对比原理：认知的锚点如何扭曲你的判断 →</div>
+  </div>
+</div>
+
+<!-- ========== 风格B：简洁笔记风 ========== -->
+<div id="styleB" class="style-panel">
+  <div class="style-label">风格 B — 简洁笔记风（Notion/语雀风格）</div>
+  <div class="notes">
+    <div class="header">
+      <div class="book-label">《影响力》连载学习笔记</div>
+      <div class="article-title">固定行为模式：动物与人类共有的自动开关</div>
+      <div class="progress">░░░░░░░░░░ 第 1/16 篇（6%）</div>
+    </div>
+    <div class="tags">
+      <span class="tag">固定行为模式</span><span class="tag">触发特征</span>
+      <span class="tag">捷径</span><span class="tag">认知负荷</span><span class="tag">对比原理</span>
+    </div>
+    <div class="section">
+      <div class="section-title">固定行为模式：动物与人类行为中的"自动开关"</div>
+      <div class="section-body"><b>固定行为模式</b>是行为生态学中的一个核心概念，它指的是生物体在特定刺激下，会以一种固定的、机械的方式执行一系列行为，仿佛被按下了某个"自动开关"。这一模式最早由诺贝尔奖得主康拉德·洛伦兹在灰雁身上发现：当灰雁看到滚出巢穴的蛋时，它会不由自主地用将蛋滚回巢中，哪怕蛋被替换成更重的、形状不规则的物体，甚至是一个空罐子，它依然会执行这一动作。这种行为的"固定"之处在于，它一旦启动，就会从头到尾执行完毕，不受外界变化的干扰。在人类身上，固定行为模式同样普遍存在。例如，当我们听到"因为"这个词时，往往会不假思索地同意对方的请求——哈佛大学社会心理学家埃伦·兰格的一项经典实验发现，在复印机前排队时，只要有人说出"因为我要复印几份文件"这一包含"因为"的请求，即使理由毫无新意，插队成功率也高达93%，而直接请求只有60%。这揭示了一个深层机制：人类大脑为了节省认知资源，进化出了依赖特定触发词或情境来自动反应的<b>捷径</b>。这种模式在多数情况下高效且准确，但一旦被别有用心者利用，就会成为我们决策中的致命漏洞。理解固定行为模式，就是认识我们内心那台"自动机器"的运作规则，从而在关键时刻按下暂停键。</div>
+    </div>
+    <div class="section">
+      <div class="section-title">捷径与认知捷径：决策中的"廉价策略"</div>
+      <div class="section-body"><b>捷径</b>，在心理学中特指个体在信息过载或时间压力下，采用简化规则来快速做出判断的策略。而<b>认知捷径</b>则是这些策略的具体形式，如"贵的就是好的"、"专家说的就是对的"等心理公式。诺贝尔经济学奖得主丹尼尔·卡尼曼将这种思维模式称为"系统1"的运作方式——它快速、直觉、无需意志力，却极易受到环境线索的操纵。一个典型的案例来自珠宝店的故事：一位店主将滞销的绿宝石手镯提价两倍，结果反而被抢购一空。顾客们自动地将"高价"与"高品质"关联起来，忽视了手镯本身的价值。这种<b>认知捷径</b>的本质是"以偏概全"：我们用一个简单的线索（价格）替代了复杂的评估（材质、工艺、稀缺性）。在进化史上，这种策略帮助祖先在危险环境中快速决策（如"听到巨大声响=逃跑"），但在现代商业社会中，它被广告商、销售员和政客系统性地利用。例如，奢侈品广告反复强调"稀缺性"和"独特性"，正是为了激活消费者的"稀缺=珍贵"捷径。要打破这种自动反应，我们需要刻意引入"系统2"思维——即慢思考、逻辑分析、质疑假设。但关键在于，我们不可能每时每刻都保持高度警惕，所以真正的智慧在于识别那些最常被利用的认知捷径，并提前设置"心理警戒线"。</div>
+    </div>
+    <div class="case-box">
+      <div class="case-title">📋 案例</div>
+      <div class="case-body">一位名叫李明的大学生，在商场看到一款标价2999元的耳机，旁边放着原价4999元的标签。他瞬间觉得"赚大了"，毫不犹豫地买下。回家后才发现，这款耳机在其他电商平台常年售价2500元。他的购买决策完全被"原价与现价的对比"所操控，而高认知负荷（逛街疲惫、手机没电、时间紧迫）让他放弃了理性比较。</div>
+    </div>
+    <div class="quote-box">
+      <div class="quote-text">"当我们以为自己在做选择时，其实很多时候只是在按下一个被预设好的按钮。你确定你的每一次'是'，都是自由意志的体现吗？"</div>
+    </div>
+    <div class="next-hint">下一篇：对比原理：认知的锚点如何扭曲你的判断 →</div>
+  </div>
+</div>
+
+<!-- ========== 风格C：卡片风 ========== -->
+<div id="styleC" class="style-panel">
+  <div class="style-label">风格 C — 卡片风（碎片化阅读）</div>
+  <div class="cards">
+    <div class="header-card">
+      <div class="book-label">《影响力》连载学习笔记</div>
+      <div class="article-title">固定行为模式：动物与人类共有的自动开关</div>
+      <div class="progress">░░░░░░░░░░ 第 1/16 篇（6%）</div>
+      <div class="tags">
+        <span class="tag">固定行为模式</span><span class="tag">触发特征</span>
+        <span class="tag">捷径</span><span class="tag">认知负荷</span><span class="tag">对比原理</span>
+      </div>
+    </div>
+    <div class="knowledge-card">
+      <span class="card-number">1</span>
+      <span class="card-title">固定行为模式：动物与人类行为中的"自动开关"</span>
+      <div class="card-body"><b>固定行为模式</b>是行为生态学中的一个核心概念，它指的是生物体在特定刺激下，会以一种固定的、机械的方式执行一系列行为，仿佛被按下了某个"自动开关"。这一模式最早由诺贝尔奖得主康拉德·洛伦兹在灰雁身上发现：当灰雁看到滚出巢穴的蛋时，它会不由自主地用喙将蛋滚回巢中，哪怕蛋被替换成更重的、形状不规则的物体，甚至是一个空罐子，它依然会执行这一动作。这种行为的"固定"之处在于，它一旦启动，就会从头到尾执行完毕，不受外界变化的干扰。在人类身上，固定行为模式同样普遍存在。例如，当我们听到"因为"这个词时，往往会不假思索地同意对方的请求——哈佛大学社会心理学家埃伦·兰格的一项经典实验发现，在复印机前排队时，只要有人说出"因为我要复印几份文件"这一包含"因为"的请求，即使理由毫无新意，插队成功率也高达93%，而直接请求只有60%。这揭示了一个深层机制：人类大脑为了节省认知资源，进化出了依赖特定触发词或情境来自动反应的<b>捷径</b>。这种模式在多数情况下高效且准确，但一旦被别有用心者利用，就会成为我们决策中的致命漏洞。理解固定行为模式，就是认识我们内心那台"自动机器"的运作规则，从而在关键时刻按下暂停键。</div>
+    </div>
+    <div class="knowledge-card">
+      <span class="card-number">2</span>
+      <span class="card-title">捷径与认知捷径：决策中的"廉价策略"</span>
+      <div class="card-body"><b>捷径</b>，在心理学中特指个体在信息过载或时间压力下，采用简化规则来快速做出判断的策略。而<b>认知捷径</b>则是这些策略的具体形式，如"贵的就是好的"、"专家说的就是对的"等心理公式。诺贝尔经济学奖得主丹尼尔·卡尼曼将这种思维模式称为"系统1"的运作方式——它快速、直觉、无需意志力，却极易受到环境线索的操纵。一个典型的案例来自珠宝店的故事：一位店主将滞销的绿宝石手镯提价两倍，结果反而被抢购一空。顾客们自动地将"高价"与"高品质"关联起来，忽视了手镯本身的价值。这种<b>认知捷径</b>的本质是"以偏概全"：我们用一个简单的线索（价格）替代了复杂的评估（材质、工艺、稀缺性）。在进化史上，这种策略帮助祖先在危险环境中快速决策（如"听到巨大声响=逃跑"），但在现代商业社会中，它被广告商、销售员和政客系统性地利用。例如，奢侈品广告反复强调"稀缺性"和"独特性"，正是为了激活消费者的"稀缺=珍贵"捷径。要打破这种自动反应，我们需要刻意引入"系统2"思维——即慢思考、逻辑分析、质疑假设。但关键在于，我们不可能每时每刻都保持高度警惕，所以真正的智慧在于识别那些最常被利用的认知捷径，并提前设置"心理警戒线"。</div>
+    </div>
+    <div class="extra-card case">
+      <div class="extra-title">📋 案例</div>
+      <div class="case-body">一位名叫李明的大学生，在商场看到一款标价2999元的耳机，旁边放着原价4999元的标签。他瞬间觉得"赚大了"，毫不犹豫地买下。回家后才发现，这款耳机在其他电商平台常年售价2500元。他的购买决策完全被"原价与现价的对比"所操控，而高认知负荷（逛街疲惫、手机没电、时间紧迫）让他放弃了理性比较。</div>
+    </div>
+    <div class="extra-card quote">
+      <div class="extra-title">💬 金句</div>
+      <div class="quote-text">"当我们以为自己在做选择时，其实很多时候只是在按下一个被预设好的按钮。你确定你的每一次'是'，都是自由意志的体现吗？"</div>
+    </div>
+    <div class="next-hint">下一篇：对比原理：认知的锚点如何扭曲你的判断 →</div>
+  </div>
+</div>
+
+<script>
+  function showStyle(style) {
+    document.querySelectorAll('.style-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.style-switcher button').forEach(b => b.classList.remove('active'));
+    document.getElementById('style' + style).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

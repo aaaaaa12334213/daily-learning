@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>排版优化预览 - 简洁笔记风 v2</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0f0f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+
+  .style-label {
+    text-align: center; padding: 20px; font-size: 18px; font-weight: 700;
+    color: #667eea; background: #f8f9ff; border-bottom: 2px solid #667eea;
+  }
+
+  /* ========== 简洁笔记风 v2 优化版 ========== */
+  .notes { max-width: 600px; margin: 0 auto; background: #fff; padding: 24px 20px; }
+  
+  /* 头部 */
+  .notes .header { margin-bottom: 24px; }
+  .notes .book-label { font-size: 12px; color: #667eea; font-weight: 600; letter-spacing: 1px; }
+  .notes .article-title { font-size: 20px; font-weight: 700; color: #1a1a2e; margin-top: 4px; line-height: 1.4; }
+  .notes .progress { font-size: 12px; color: #aaa; margin-top: 8px; font-family: monospace; }
+  
+  /* 关键词标签 */
+  .notes .tags { margin: 12px 0 24px; }
+  .notes .tag {
+    display: inline-block; background: #f0edff; color: #667eea;
+    font-size: 11px; padding: 3px 10px; border-radius: 4px; margin: 2px 4px 2px 0;
+    font-weight: 500;
+  }
+
+  /* 知识点 section */
+  .notes .section { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid #f0f0f0; }
+  .notes .section:last-of-type { border-bottom: none; }
+  .notes .section-title {
+    font-size: 15px; font-weight: 700; color: #1a1a2e;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .notes .section-title::before {
+    content: ''; display: inline-block; width: 4px; height: 16px;
+    background: #667eea; border-radius: 2px; flex-shrink: 0;
+  }
+
+  /* 要点列表 */
+  .notes .key-points {
+    background: #f8f9ff; border-radius: 8px; padding: 12px 16px;
+    margin-bottom: 14px; border-left: 3px solid #667eea;
+  }
+  .notes .key-points-title {
+    font-size: 12px; font-weight: 600; color: #667eea; margin-bottom: 6px;
+  }
+  .notes .key-points ul {
+    list-style: none; padding: 0;
+  }
+  .notes .key-points li {
+    font-size: 13px; color: #555; line-height: 1.6; padding: 2px 0;
+    padding-left: 16px; position: relative;
+  }
+  .notes .key-points li::before {
+    content: '•'; position: absolute; left: 0; color: #667eea; font-weight: 700;
+  }
+
+  /* 正文段落 - 拆小段 */
+  .notes .paragraph {
+    font-size: 14px; color: #444; line-height: 1.9;
+    margin-bottom: 12px; text-align: justify;
+  }
+  .notes .paragraph:last-child { margin-bottom: 0; }
+
+  /* 关键词高亮 - 分层 */
+  .notes .keyword-core {
+    color: #667eea; font-weight: 700;
+    background: #f0edff; padding: 1px 4px; border-radius: 3px;
+  }
+  .notes .keyword {
+    font-weight: 700; color: #333;
+  }
+
+  /* 案例卡片 */
+  .notes .case-box {
+    background: #fff8e1; border-radius: 10px; padding: 16px 18px; margin: 20px 0;
+    border: 1px solid #fff3cd;
+  }
+  .notes .case-title {
+    font-size: 12px; font-weight: 700; color: #f57c00; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .notes .case-body { font-size: 13px; color: #666; line-height: 1.8; }
+
+  /* 金句卡片 */
+  .notes .quote-box {
+    border-left: 3px solid #667eea; padding: 14px 18px; margin: 20px 0;
+    background: #f8f9ff; border-radius: 0 10px 10px 0;
+  }
+  .notes .quote-text { font-size: 14px; color: #444; font-style: italic; line-height: 1.7; }
+
+  /* 下一篇提示 */
+  .notes .next-hint {
+    padding: 14px 18px; background: #f8f9ff; border-radius: 10px;
+    font-size: 13px; color: #667eea; text-align: center; margin-top: 24px;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<div class="style-label">排版优化版 — 简洁笔记风 v2</div>
+
+<div class="notes">
+  <!-- 头部 -->
+  <div class="header">
+    <div class="book-label">《影响力》连载学习笔记</div>
+    <div class="article-title">固定行为模式：动物与人类共有的自动开关</div>
+    <div class="progress">░░░░░░░░░░ 第 1/16 篇（6%）</div>
+  </div>
+
+  <!-- 关键词标签 -->
+  <div class="tags">
+    <span class="tag">固定行为模式</span>
+    <span class="tag">触发特征</span>
+    <span class="tag">捷径</span>
+    <span class="tag">认知负荷</span>
+    <span class="tag">对比原理</span>
+  </div>
+
+  <!-- 知识点1 -->
+  <div class="section">
+    <div class="section-title">固定行为模式：动物与人类行为中的"自动开关"</div>
+    
+    <!-- 要点提取 -->
+    <div class="key-points">
+      <div class="key-points-title">核心要点</div>
+      <ul>
+        <li>固定行为模式由特定触发特征启动，一旦触发便自动执行</li>
+        <li>人类听到"因为"会不假思索地同意请求（成功率93% vs 60%）</li>
+        <li>这种模式高效但容易被利用，需要学会识别和暂停</li>
+      </ul>
+    </div>
+
+    <!-- 拆分后的段落 -->
+    <p class="paragraph">
+      <span class="keyword-core">固定行为模式</span>是行为生态学中的核心概念，指生物体在特定刺激下，会以固定的、机械的方式执行一系列行为，仿佛被按下了某个"自动开关"。
+    </p>
+    <p class="paragraph">
+      这一模式最早由诺贝尔奖得主康拉德·洛伦兹在灰雁身上发现：当灰雁看到滚出巢穴的蛋时，它会不由自主地用喙将蛋滚回巢中，哪怕蛋被替换成更重的、形状不规则的物体，甚至是一个空罐子，它依然会执行这一动作。这种行为的"固定"之处在于，它一旦启动，就会从头到尾执行完毕，不受外界变化的干扰。
+    </p>
+    <p class="paragraph">
+      在人类身上，<span class="keyword-core">固定行为模式</span>同样普遍存在。哈佛大学社会心理学家埃伦·兰格的经典实验发现：在复印机前排队时，只要有人说出"因为我要复印几份文件"这一包含"因为"的请求，即使理由毫无新意，插队成功率也高达 <span class="keyword">93%</span>，而直接请求只有 <span class="keyword">60%</span>。
+    </p>
+    <p class="paragraph">
+      这揭示了一个深层机制：人类大脑为了节省认知资源，进化出了依赖特定触发词或情境来自动反应的<span class="keyword">捷径</span>。这种模式在多数情况下高效且准确，但一旦被别有用心者利用，就会成为我们决策中的致命漏洞。
+    </p>
+  </div>
+
+  <!-- 知识点2 -->
+  <div class="section">
+    <div class="section-title">捷径与认知捷径：决策中的"廉价策略"</div>
+    
+    <div class="key-points">
+      <div class="key-points-title">核心要点</div>
+      <ul>
+        <li>"系统1"思维快速直觉但易被操纵（如"贵=好"）</li>
+        <li>认知捷径本质是"以偏概全"——用简单线索替代复杂评估</li>
+        <li>打破自动反应需要引入"系统2"慢思考</li>
+      </ul>
+    </div>
+
+    <p class="paragraph">
+      <span class="keyword-core">捷径</span>在心理学中特指个体在信息过载或时间压力下，采用简化规则来快速做出判断的策略。<span class="keyword-core">认知捷径</span>则是这些策略的具体形式，如"贵的就是好的"、"专家说的就是对的"等心理公式。
+    </p>
+    <p class="paragraph">
+      诺贝尔经济学奖得主丹尼尔·卡尼曼将这种思维模式称为<span class="keyword-core">"系统1"</span>的运作方式——它快速、直觉、无需意志力，却极易受到环境线索的操纵。一个典型案例：一位店主将滞销的绿宝石手镯提价两倍，结果反而被抢购一空。顾客们自动地将"高价"与"高品质"关联起来，忽视了手镯本身的价值。
+    </p>
+    <p class="paragraph">
+      这种<span class="keyword">认知捷径</span>的本质是"以偏概全"：我们用一个简单的线索（价格）替代了复杂的评估（材质、工艺、稀缺性）。在进化史上，这种策略帮助祖先在危险环境中快速决策，但在现代商业社会中，它被广告商、销售员系统性地利用。
+    </p>
+    <p class="paragraph">
+      要打破这种自动反应，我们需要刻意引入<span class="keyword-core">"系统2"思维</span>——即慢思考、逻辑分析、质疑假设。真正的智慧在于识别那些最常被利用的认知捷径，并提前设置"心理警戒线"。
+    </p>
+  </div>
+
+  <!-- 知识点3 -->
+  <div class="section">
+    <div class="section-title">对比原理：感知的扭曲与操纵</div>
+    
+    <div class="key-points">
+      <div class="key-points-title">核心要点</div>
+      <ul>
+        <li>对比原理：两样东西先后呈现时，对第二样的感知受第一样强烈影响</li>
+        <li>商业中广泛应用：先看差的再看好的，让后者显得更优</li>
+        <li>防御方法：建立自己的"内在参照系"，提前设定心理预算</li>
+      </ul>
+    </div>
+
+    <p class="paragraph">
+      <span class="keyword-core">对比原理</span>指的是，当两样东西一前一后地呈现在我们面前时，我们对第二样东西的感知会受到第一样东西的强烈影响。例如，先举起一个轻物体，再举起一个重物体，我们会觉得后者比实际更重。
+    </p>
+    <p class="paragraph">
+      在商业领域，对比原理被运用到了极致。房产中介会先带客户看几间破旧、昂贵的房子，然后再带去看真正想卖的房子；汽车销售员会先谈妥汽车的价格，再逐一推荐配件——每一项单独看起来都不贵，但加起来却远超预算。
+    </p>
+    <p class="paragraph">
+      对比原理之所以有效，是因为它绕过理性评估，直接作用于我们的感知系统。要防御这种操纵，我们需要建立自己的<span class="keyword">"内在参照系"</span>——在购买前先设定心理预算，在谈判前先明确底线，在社交中警惕"先大后小"的请求模式。
+    </p>
+  </div>
+
+  <!-- 案例卡片 -->
+  <div class="case-box">
+    <div class="case-title">📋 案例</div>
+    <div class="case-body">
+      一位名叫李明的大学生，在商场看到一款标价2999元的耳机，旁边放着原价4999元的标签。他瞬间觉得"赚大了"，毫不犹豫地买下。回家后才发现，这款耳机在其他电商平台常年售价2500元。他的购买决策完全被"原价与现价的对比"所操控，而高认知负荷（逛街疲惫、手机没电、时间紧迫）让他放弃了理性比较。
+    </div>
+  </div>
+
+  <!-- 金句卡片 -->
+  <div class="quote-box">
+    <div class="quote-text">"当我们以为自己在做选择时，其实很多时候只是在按下一个被预设好的按钮。你确定你的每一次'是'，都是自由意志的体现吗？"</div>
+  </div>
+
+  <!-- 下一篇提示 -->
+  <div class="next-hint">下一篇：对比原理：认知的锚点如何扭曲你的判断 →</div>
+</div>
+
+</body>
+</html>
